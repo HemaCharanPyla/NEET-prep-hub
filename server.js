@@ -22,14 +22,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`NEET Prep Hub server running on port ${PORT}`);
-});
-
-// Serve the main page
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`NEET Prep Hub server running on port ${PORT}`);
-});
+    console.log(NEET Prep Hub server running on port ${PORT});
+}); 

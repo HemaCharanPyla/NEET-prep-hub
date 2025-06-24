@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Prep Hub - Your Success Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#3b82f6',
+                        'secondary': '#6366f1',
+                        'accent': '#10b981',
+                        'dark-bg': '#0f172a',
+                        'dark-card': '#1e293b',
+                        'dark-surface': '#334155'
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-white">
+    <!-- Motivational Popup -->
+    <div id="motivationPopup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+        <div class="bg-dark-card border border-gray-600 rounded-2xl p-8 m-4 max-w-4xl max-h-[90vh] overflow-y-auto scrollbar-hide shadow-2xl">
+            <div class="text-center mb-6">
+                <h2 class="text-4xl font-bold text-white mb-4">
+                    Welcome to Your Success Journey!
+                </h2>
+                <p class="text-xl text-gray-300 mb-6">
+                    "Success is not final, failure is not fatal: it is the courage to continue that counts." - Winston Churchill
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-dark-surface rounded-lg p-6 border border-gray-600">
+                    <h3 class="text-2xl font-bold text-accent mb-4 flex items-center">
+                        <i class="fas fa-fire mr-3"></i>Daily Motivation
+                    </h3>
+                    <div class="space-y-3 text-gray-300">
+                        <p class="flex items-start"><span class="text-accent mr-2">✓</span>Every hour of study today brings you closer to your dream</p>
+                        <p class="flex items-start"><span class="text-accent mr-2">✓</span>NEET is not just an exam, it's your gateway to saving lives</p>
+                        <p class="flex items-start"><span class="text-accent mr-2">✓</span>Your dedication today shapes tomorrow's doctor</p>
+                        <p class="flex items-start"><span class="text-accent mr-2">✓</span>Champions are made in the study room, not just the exam hall</p>
+                    </div>
+                </div>
+
+                <div class="bg-dark-surface rounded-lg p-6 border border-gray-600">
+                    <h3 class="text-2xl font-bold text-primary mb-4 flex items-center">
+                        <i class="fab fa-youtube mr-3"></i>Top NEET Channels
+                    </h3>
+                    <div class="space-y-3">
+                        <a href="https://youtube.com/@PhysicsWallah" target="_blank" class="block bg-slate-800 rounded p-3 hover:bg-slate-700 transition-colors border border-gray-600 hover:border-primary">
+                            <div class="flex items-center">
+                                <i class="fab fa-youtube text-red-500 mr-3"></i>
+                                <div>
+                                    <p class="font-semibold text-white">Physics Wallah</p>
+                                    <p class="text-sm text-gray-400">Complete NEET Preparation</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://youtube.com/@unacademy" target="_blank" class="block bg-slate-800 rounded p-3 hover:bg-slate-700 transition-colors border border-gray-600 hover:border-primary">
+                            <div class="flex items-center">
+                                <i class="fab fa-youtube text-red-500 mr-3"></i>
+                                <div>
+                                    <p class="font-semibold text-white">Unacademy NEET</p>
+                                    <p class="text-sm text-gray-400">Expert Faculty Sessions</p>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://youtube.com/@vedantu" target="_blank" class="block bg-slate-800 rounded p-3 hover:bg-slate-700 transition-colors border border-gray-600 hover:border-primary">
+                            <div class="flex items-center">
+                                <i class="fab fa-youtube text-red-500 mr-3"></i>
+                                <div>
+                                    <p class="font-semibold text-white">Vedantu NEET</p>
+                                    <p class="text-sm text-gray-400">Live Classes & Doubt Solving</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button id="startJourneyBtn" class="bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 px-8 rounded-lg text-xl hover:opacity-90 transition-opacity">
+                    Start My Success Journey <i class="fas fa-rocket ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Study Timer Modal -->
+    <div id="timerModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-40 hidden">
+        <div class="bg-dark-card border border-gray-600 rounded-2xl p-8 m-4 max-w-md w-full shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-accent">Study Timer</h3>
+                <button id="closeTimerBtn" class="text-gray-400 hover:text-white text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-gray-300 mb-2">Subject:</label>
+                    <select id="subjectSelect" class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none">
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Biology">Biology</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-300 mb-2">Task:</label>
+                    <input type="text" id="taskInput" class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none" placeholder="What are you studying today?">
+                </div>
+                
+                <div class="text-center py-6">
+                    <div id="timerDisplay" class="text-6xl font-bold text-accent mb-4">00:00:00</div>
+                    <div id="currentTask" class="text-gray-300 hidden">
+                        <strong>Current Task:</strong> <span id="taskDisplay"></span>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <button id="startTimerBtn" class="flex-1 bg-accent text-white font-bold py-3 rounded-lg hover:bg-green-600 transition-colors">
+                        <i class="fas fa-play mr-2"></i>Start
+                    </button>
+                    <button id="stopTimerBtn" class="flex-1 bg-red-500 text-white font-bold py-3 rounded-lg hover:bg-red-600 transition-colors hidden">
+                        <i class="fas fa-stop mr-2"></i>Stop
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="border-b border-gray-700 bg-dark-card/80 backdrop-blur-sm sticky top-0 z-30">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl font-bold text-white flex items-center">
+                    <i class="fas fa-graduation-cap mr-3 animate-float text-primary"></i>
+                    NEET Prep Hub
+                </h1>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <p class="text-accent font-semibold">Future Doctor</p>
+                        <p class="text-sm text-gray-400">Your Success Journey</p>
+                    </div>
+                    <button id="timerBtn" class="bg-dark-surface border border-gray-600 text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-600 hover:text-white transition-colors">
+                        <i class="fas fa-clock mr-2"></i>Timer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-dark-surface border-b border-gray-700">
+        <div class="container mx-auto px-4">
+            <div class="flex space-x-1">
+                <button class="nav-tab active px-6 py-4 text-primary border-b-2 border-primary font-semibold" data-section="doubt-solver">
+                    <i class="fas fa-question-circle mr-2"></i>Doubt Solver
+                </button>
+                <button class="nav-tab px-6 py-4 text-gray-400 hover:text-secondary transition-colors" data-section="study-stats">
+                    <i class="fas fa-chart-line mr-2"></i>Study Stats
+                </button>
+                <button class="nav-tab px-6 py-4 text-gray-400 hover:text-accent transition-colors" data-section="resources">
+                    <i class="fas fa-book mr-2"></i>Resources
+                </button>
+                <button class="nav-tab px-6 py-4 text-gray-400 hover:text-accent transition-colors" data-section="study-planner">
+                    <i class="fas fa-calendar-alt mr-2"></i>Study with Me
+                </button>
+                <button class="nav-tab px-6 py-4 text-gray-400 hover:text-secondary transition-colors" data-section="textbooks">
+                    <i class="fas fa-book-open mr-2"></i>Textbooks
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Doubt Solver Section -->
+        <section id="doubt-solver" class="content-section">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-primary mb-4">AI Doubt Solver</h2>
+                <p class="text-xl text-gray-300">Ask any NEET question and get instant expert help!</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-dark-card rounded-2xl border border-gray-700 shadow-lg">
+                    <div id="chatMessages" class="h-96 overflow-y-auto p-6 space-y-4 scrollbar-hide">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-primary rounded-full p-2 text-white">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="bg-dark-surface rounded-lg p-4 max-w-md">
+                                <p class="text-gray-300">Hi there! I'm your NEET preparation assistant. I can help you with Physics, Chemistry, and Biology questions. What would you like to know?</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="typingIndicator" class="px-6 pb-4 hidden">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-primary rounded-full p-2 text-white">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="bg-dark-surface rounded-lg p-4">
+                                <div class="flex space-x-1">
+                                    <div class="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                                    <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                                    <div class="w-2 h-2 bg-primary rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 border-t border-gray-700">
+                        <div class="flex space-x-4">
+                            <textarea 
+                                id="questionInput" 
+                                placeholder="Type your NEET question here..."
+                                rows="2"
+                                maxlength="500"
+                                class="flex-1 bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 text-white resize-none focus:border-primary focus:outline-none"
+                            ></textarea>
+                            <button id="sendQuestionBtn" class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-lg hover:opacity-90 transition-opacity">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center mt-2">
+                            <span id="charCount" class="text-sm text-gray-400">0/500</span>
+                            <div class="flex space-x-2">
+                                <span class="text-xs bg-dark-surface px-2 py-1 rounded text-primary">Physics</span>
+                                <span class="text-xs bg-dark-surface px-2 py-1 rounded text-accent">Chemistry</span>
+                                <span class="text-xs bg-dark-surface px-2 py-1 rounded text-red-400">Biology</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Stats Section -->
+        <section id="study-stats" class="content-section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-secondary mb-4">Study Statistics</h2>
+                <p class="text-xl text-gray-300">Track your daily progress and achievements</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-dark-card rounded-2xl p-6 border border-gray-600 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-primary">Physics</h3>
+                        <i class="fas fa-atom text-3xl text-primary"></i>
+                    </div>
+                    <p id="physicsTime" class="text-3xl font-bold text-white">0h 0m</p>
+                    <p class="text-gray-400 mt-2">Today's study time</p>
+                </div>
+                
+                <div class="bg-dark-card rounded-2xl p-6 border border-gray-600 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-accent">Chemistry</h3>
+                        <i class="fas fa-flask text-3xl text-accent"></i>
+                    </div>
+                    <p id="chemistryTime" class="text-3xl font-bold text-white">0h 0m</p>
+                    <p class="text-gray-400 mt-2">Today's study time</p>
+                </div>
+                
+                <div class="bg-dark-card rounded-2xl p-6 border border-gray-600 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-red-400">Biology</h3>
+                        <i class="fas fa-dna text-3xl text-red-400"></i>
+                    </div>
+                    <p id="biologyTime" class="text-3xl font-bold text-white">0h 0m</p>
+                    <p class="text-gray-400 mt-2">Today's study time</p>
+                </div>
+            </div>
+
+            <div class="bg-dark-card rounded-2xl p-6 border border-gray-700">
+                <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    <i class="fas fa-history mr-3 text-secondary"></i>Recent Study Sessions
+                </h3>
+                <div id="sessionsList" class="space-y-4">
+                    <div class="text-center text-gray-400 py-8">
+                        <i class="fas fa-clock text-4xl mb-4 text-gray-600"></i>
+                        <p>No study sessions yet. Start your first session using the timer!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="content-section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-red-400 mb-4">Study Resources</h2>
+                <p class="text-xl text-gray-300">Essential books and materials for NEET success</p>
+            </div>
+            
+            <div class="space-y-8">
+                <div class="bg-dark-card rounded-2xl p-6 border border-gray-600">
+                    <h3 class="text-2xl font-bold text-primary mb-6 flex items-center">
+                        <i class="fas fa-atom mr-3"></i>Physics Resources
+                    </h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-dark-surface rounded-lg p-4 border border-gray-700">
+                            <h4 class="font-bold text-white mb-2">Concepts of Physics</h4>
+                            <p class="text-gray-400 mb-2">H.C. Verma (Vol 1 & 2)</p>
+                            <span class="bg-primary text-white px-2 py-1 rounded text-sm">Conceptual</span>
+                        </div>
+                        <div class="bg-dark-surface rounded-lg p-4 border border-gray-700">
+                            <h4 class="font-bold text-white mb-2">Fundamentals of Physics</h4>
+                            <p class="text-gray-400 mb-2">Halliday, Resnick, Walker</p>
+                            <span class="bg-accent text-white px-2 py-1 rounded text-sm">Comprehensive</span>
+                        </div>
+                        <div class="bg-dark-surface rounded-lg p-4 border border-gray-700">
+                            <h4 class="font-bold text-white mb-2">Problems in General Physics</h4>
+                            <p class="text-gray-400 mb-2">I.E. Irodov</p>
+                            <span class="bg-red-500 text-white px-2 py-1 rounded text-sm">Advanced</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-card rounded-2xl p-6 border border-gray-600">
+                    <h3 class="text-2xl font-bold text-accent mb-6 flex items-center">
+                        <i class="fas fa-flask mr-3"></i>Chemistry Resources
+                    </h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-dark-surface rounded-lg p-4 border border-gray-700">
+                            <h4 class="font-bold text-white mb-2">Physical Chemistry</h4>
+                            <p class="text-gray-400 mb-2">O.P. Tandon</p>
+                            <span class="bg-accent text-white px-2 py-1 rounded text-sm">Theory</span>
+                        </div>
+                        <div class="bg-dark-surface rounded-lg p-4 border border-gray-700">
+                            <h4 class="font-bold text-white mb-2">Organic Chemistry</h4>
+                            <p class="text-gray-400 mb-2">Morrison & Boyd</p>
+                            <span class="bg-yellow-500 text-white px-2 py-1 rounded text-sm">Detailed</span>
+                        </div>
+                        <div class="bg-dark-surface rounded-lg p-4 border border-gray-700">
+                            <h4 class="font-bold text-white mb-2">Concise Inorganic Chemistry</h4>
+                            <p class="text-gray-400 mb-2">J.D. Lee</p>
+                            <span class="bg-secondary text-white px-2 py-1 rounded text-sm">Reference</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-dark-card rounded-2xl p-6 border border-gray-600">
+                    <h3 class="text-2xl font-bold text-red-400 mb-6 flex items-center">
+                        <i class="fas fa-dna mr-3"></i>Biology Resources
+                    </h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-dark-surface rounded-lg p-4 border border-gray-700">
+                            <h4 class="font-bold text-white mb-2">Biology (Class XI & XII)</h4>
+                            <p class="text-gray-400 mb-2">NCERT</p>
+                            <span class="bg-red-400 text-white px-2 py-1 rounded text-sm">Essential</span>
+                        </div>
+                        <div class="bg-dark-surface rounded-lg p-4 border border-gray-700">
+                            <h4 class="font-bold text-white mb-2">Trueman's Biology</h4>
+                            <p class="text-gray-400 mb-2">K.N. Bhatia</p>
+                            <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm">Comprehensive</span>
+                        </div>
+                        <div class="bg-dark-surface rounded-lg p-4 border border-gray-700">
+                            <h4 class="font-bold text-white mb-2">Objective Biology</h4>
+                            <p class="text-gray-400 mb-2">Dinesh Companion Series</p>
+                            <span class="bg-orange-500 text-white px-2 py-1 rounded text-sm">Practice</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Planner Section -->
+        <section id="study-planner" class="content-section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-accent mb-4">Study with Me</h2>
+                <p class="text-xl text-gray-300">Let's create your personalized study schedule</p>
+            </div>
+            
+            <!-- Study Hours Input -->
+            <div class="max-w-2xl mx-auto mb-8">
+                <div class="bg-dark-card rounded-2xl p-6 border border-gray-600 shadow-lg">
+                    <h3 class="text-2xl font-bold text-accent mb-4 flex items-center">
+                        <i class="fas fa-clock mr-3"></i>Daily Study Goal
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-300 mb-2">How many hours do you want to study daily?</label>
+                            <input type="number" id="studyHoursInput" min="1" max="16" value="8" class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2">Start time</label>
+                            <input type="time" id="startTimeInput" value="06:00" class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none">
+                        </div>
+                        <button id="generateTimetableBtn" class="w-full bg-gradient-to-r from-accent to-primary text-white font-bold py-3 rounded-lg hover:opacity-90 transition-opacity">
+                            <i class="fas fa-magic mr-2"></i>Generate My Timetable
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generated Timetable -->
+            <div id="timetableContainer" class="max-w-4xl mx-auto hidden">
+                <div class="bg-dark-card rounded-2xl p-6 border border-gray-700 mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-white flex items-center">
+                            <i class="fas fa-calendar-check mr-3 text-accent"></i>Your Personalized Study Schedule
+                        </h3>
+                        <button id="customizeTimetableBtn" class="bg-secondary text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition-colors">
+                            <i class="fas fa-edit mr-2"></i>Customize
+                        </button>
+                    </div>
+                    <div id="timetableDisplay" class="space-y-4">
+                        <!-- Timetable will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Customization Panel -->
+                <div id="customizationPanel" class="bg-dark-card rounded-2xl p-6 border border-gray-600 shadow-lg hidden">
+                    <h4 class="text-xl font-bold text-secondary mb-4">Customize Your Schedule</h4>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-300 mb-2">Break Duration (minutes)</label>
+                            <input type="number" id="breakDurationInput" min="5" max="60" value="15" class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-secondary focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2">Study Session Length (minutes)</label>
+                            <input type="number" id="sessionLengthInput" min="30" max="180" value="90" class="w-full bg-dark-surface border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-secondary focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2">Physics Priority (%)</label>
+                            <input type="range" id="physicsSlider" min="0" max="100" value="35" class="w-full accent-primary">
+                            <span id="physicsValue" class="text-primary font-bold">35%</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2">Chemistry Priority (%)</label>
+                            <input type="range" id="chemistrySlider" min="0" max="100" value="35" class="w-full accent-accent">
+                            <span id="chemistryValue" class="text-accent font-bold">35%</span>
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2">Biology Priority (%)</label>
+                            <input type="range" id="biologySlider" min="0" max="100" value="30" class="w-full accent-red-400">
+                            <span id="biologyValue" class="text-red-400 font-bold">30%</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 mt-6">
+                        <button id="applyCustomizationBtn" class="flex-1 bg-secondary text-white font-bold py-3 rounded-lg hover:bg-purple-600 transition-colors">
+                            <i class="fas fa-check mr-2"></i>Apply Changes
+                        </button>
+                        <button id="resetTimetableBtn" class="flex-1 bg-gray-600 text-white font-bold py-3 rounded-lg hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-undo mr-2"></i>Reset to Default
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Motivational Tips -->
+                <div class="bg-dark-surface rounded-2xl p-6 border border-gray-700 mt-6">
+                    <h4 class="text-xl font-bold text-accent mb-4 flex items-center">
+                        <i class="fas fa-lightbulb mr-3"></i>Study Tips for Success
+                    </h4>
+                    <div class="grid md:grid-cols-2 gap-4 text-gray-300">
+                        <div class="flex items-start">
+                            <span class="text-accent mr-2 mt-1">•</span>
+                            <p>Take regular breaks to maintain focus and avoid burnout</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-primary mr-2 mt-1">•</span>
+                            <p>Review previous day's topics before starting new ones</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-red-400 mr-2 mt-1">•</span>
+                            <p>Practice questions daily to reinforce learning</p>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="text-secondary mr-2 mt-1">•</span>
+                            <p>Maintain a consistent sleep schedule for better retention</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Textbooks Section -->
+        <section id="textbooks" class="content-section hidden">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-bold text-secondary mb-4">Digital Textbooks</h2>
+                <p class="text-xl text-gray-300">Access essential physics textbooks and study materials</p>
+            </div>
+            
+            <div class="max-w-6xl mx-auto">
+                <!-- Textbook Categories -->
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-dark-card rounded-2xl p-6 border border-gray-600">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-primary">Physics</h3>
+                            <i class="fas fa-atom text-3xl text-primary"></i>
+                        </div>
+                        <div class="space-y-3">
+                            <button onclick="openTextbook('fundamentals-physics')" class="w-full text-left bg-dark-surface rounded-lg p-4 border border-gray-600 hover:border-primary transition-colors">
+                                <h4 class="font-semibold text-white mb-2">Fundamentals of Physics</h4>
+                                <p class="text-sm text-gray-400">Comprehensive physics textbook covering mechanics, thermodynamics, and more</p>
+                                <span class="inline-block mt-2 bg-primary text-white px-2 py-1 rounded text-xs">Available</span>
+                            </button>
+                            <button class="w-full text-left bg-dark-surface rounded-lg p-4 border border-gray-600 opacity-50">
+                                <h4 class="font-semibold text-white mb-2">Concepts of Physics</h4>
+                                <p class="text-sm text-gray-400">H.C. Verma - Problem-solving approach</p>
+                                <span class="inline-block mt-2 bg-gray-600 text-white px-2 py-1 rounded text-xs">Coming Soon</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-dark-card rounded-2xl p-6 border border-gray-600">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-accent">Chemistry</h3>
+                            <i class="fas fa-flask text-3xl text-accent"></i>
+                        </div>
+                        <div class="space-y-3">
+                            <button class="w-full text-left bg-dark-surface rounded-lg p-4 border border-gray-600 opacity-50">
+                                <h4 class="font-semibold text-white mb-2">Physical Chemistry</h4>
+                                <p class="text-sm text-gray-400">O.P. Tandon - Theory and problems</p>
+                                <span class="inline-block mt-2 bg-gray-600 text-white px-2 py-1 rounded text-xs">Coming Soon</span>
+                            </button>
+                            <button class="w-full text-left bg-dark-surface rounded-lg p-4 border border-gray-600 opacity-50">
+                                <h4 class="font-semibold text-white mb-2">Organic Chemistry</h4>
+                                <p class="text-sm text-gray-400">Morrison & Boyd - Detailed explanations</p>
+                                <span class="inline-block mt-2 bg-gray-600 text-white px-2 py-1 rounded text-xs">Coming Soon</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-dark-card rounded-2xl p-6 border border-gray-600">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-red-400">Biology</h3>
+                            <i class="fas fa-dna text-3xl text-red-400"></i>
+                        </div>
+                        <div class="space-y-3">
+                            <button class="w-full text-left bg-dark-surface rounded-lg p-4 border border-gray-600 opacity-50">
+                                <h4 class="font-semibold text-white mb-2">NCERT Biology</h4>
+                                <p class="text-sm text-gray-400">Class XI & XII - Essential foundation</p>
+                                <span class="inline-block mt-2 bg-gray-600 text-white px-2 py-1 rounded text-xs">Coming Soon</span>
+                            </button>
+                            <button class="w-full text-left bg-dark-surface rounded-lg p-4 border border-gray-600 opacity-50">
+                                <h4 class="font-semibold text-white mb-2">Trueman's Biology</h4>
+                                <p class="text-sm text-gray-400">K.N. Bhatia - Comprehensive coverage</p>
+                                <span class="inline-block mt-2 bg-gray-600 text-white px-2 py-1 rounded text-xs">Coming Soon</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Textbook Reader -->
+                <div id="textbookReader" class="bg-dark-card rounded-2xl border border-gray-600 p-6 hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 id="textbookTitle" class="text-2xl font-bold text-white">Fundamentals of Physics</h3>
+                        <button id="closeTextbook" class="text-gray-400 hover:text-white text-2xl">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Table of Contents -->
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="md:col-span-1">
+                            <h4 class="text-lg font-bold text-primary mb-4">Table of Contents</h4>
+                            <div id="tableOfContents" class="space-y-2 max-h-96 overflow-y-auto">
+                                <button onclick="loadChapter('mechanics')" class="w-full text-left p-3 rounded bg-dark-surface border border-gray-600 hover:border-primary transition-colors">
+                                    <div class="font-semibold text-white">Chapter 1: Mechanics</div>
+                                    <div class="text-sm text-gray-400">Motion, forces, and energy</div>
+                                </button>
+                                <button onclick="loadChapter('thermodynamics')" class="w-full text-left p-3 rounded bg-dark-surface border border-gray-600 hover:border-primary transition-colors">
+                                    <div class="font-semibold text-white">Chapter 2: Thermodynamics</div>
+                                    <div class="text-sm text-gray-400">Heat and temperature</div>
+                                </button>
+                                <button onclick="loadChapter('waves')" class="w-full text-left p-3 rounded bg-dark-surface border border-gray-600 hover:border-primary transition-colors">
+                                    <div class="font-semibold text-white">Chapter 3: Waves</div>
+                                    <div class="text-sm text-gray-400">Wave motion and sound</div>
+                                </button>
+                                <button onclick="loadChapter('electricity')" class="w-full text-left p-3 rounded bg-dark-surface border border-gray-600 hover:border-primary transition-colors">
+                                    <div class="font-semibold text-white">Chapter 4: Electricity</div>
+                                    <div class="text-sm text-gray-400">Electric fields and circuits</div>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Chapter Content -->
+                        <div class="md:col-span-3">
+                            <div id="chapterContent" class="bg-white text-gray-900 rounded-lg p-6 min-h-96 max-h-96 overflow-y-auto">
+                                <div class="text-center text-gray-500 py-8">
+                                    <i class="fas fa-book-open text-4xl mb-4"></i>
+                                    <p>Select a chapter from the table of contents to begin reading</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation Controls -->
+                            <div class="flex justify-between items-center mt-4">
+                                <button id="prevChapter" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors">
+                                    <i class="fas fa-chevron-left mr-2"></i>Previous
+                                </button>
+                                <div class="text-gray-400">
+                                    <span id="currentChapter">Select a chapter</span>
+                                </div>
+                                <button id="nextChapter" class="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                                    Next<i class="fas fa-chevron-right ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Report Issues Section -->
+    <footer class="bg-dark-card border-t border-gray-800 mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-gray-300 mb-4">Experiencing Issues?</h3>
+                <p class="text-gray-400 mb-6">Help us improve your experience by reporting any problems you encounter</p>
+                
+                <div class="flex flex-wrap justify-center gap-4 mb-6">
+                    <button onclick="reportIssue('API Error')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>API Error
+                    </button>
+                    <button onclick="reportIssue('App Crashed')" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
+                        <i class="fas fa-bug mr-2"></i>App Crashed
+                    </button>
+                    <button onclick="reportIssue('Feature Not Working')" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
+                        <i class="fas fa-wrench mr-2"></i>Feature Not Working
+                    </button>
+                    <button onclick="reportIssue('UI/UX Issue')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
+                        <i class="fas fa-paint-brush mr-2"></i>UI/UX Issue
+                    </button>
+                    <button onclick="reportIssue('Other')" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors flex items-center">
+                        <i class="fas fa-question-circle mr-2"></i>Other
+                    </button>
+                </div>
+                
+                <p class="text-sm text-gray-500">
+                    <i class="fas fa-envelope mr-2"></i>
+                    Reports will be sent to our support team for quick resolution
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full transition-transform z-50">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="successMessage">Success!</span>
+        </div>
+    </div>
+
+    <!-- Error Toast -->
+    <div id="errorToast" class="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full transition-transform z-50">
+        <div class="flex items-center">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            <span id="errorMessage">Something went wrong!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
